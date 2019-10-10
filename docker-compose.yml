@@ -3,6 +3,8 @@ services:
   php:
     image: liaosp/php72
     volumes:
+      - ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - .:/app
   nginx:
     image: nginx
@@ -12,11 +14,12 @@ services:
       - .:/app
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
   mysql:
-    image: mysql:5.6
+    image: mysql:${MYSQL_VERSION}
     volumes:
-      - ./mysql/mysqldata:/var/lib/mysql
+      - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:rw #数据库配置
+      - ${MYSQL_DATAPATH}:/var/lib/mysql #数据储存的地址
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - 3306:3306
   redis:
