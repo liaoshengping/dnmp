@@ -1,8 +1,8 @@
 
 ```
-cp .env.eample .env
 git clone https://github.com/liaoshengping/dnmp.git
+cd dnmp
+cp .env.pro .env   #如果是开发环境: cp .env.dev .env  还要 mkdir /home/mysql/conf/ 还要 cp -r mysql.cnf /home/mysql/conf/mysql.cnf
 docker-compose up
 curl localhost
 ```
->在开发环境中，可能会有权限问题，.env 中配置MYSQL_DATAPATH 的储存位置 /home/mysql
